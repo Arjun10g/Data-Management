@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Management</title>
+</head>
+<link rel="stylesheet" href="index.css">
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            processEscapes: true
+        },
+        "HTML-CSS": { scale: 90 },
+    });
+</script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js" integrity="sha512-cOH8ndwGgPo+K7pTvMrqYbmI8u8k6Sho3js0gOqVWTmQMlLIi6TbqGWRTpf1ga8ci9H3iPsvDLr4X7xwhC/+DQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js" integrity="sha512-AMl4wfwAmDM1lsQvVBBRHYENn1FR8cfOTpt8QVbb/P55mYOdahHD4LmHM1W55pNe3j/3od8ELzPf/8eNkkjISQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Observer.min.js" integrity="sha512-7xTD1meeGGoAzwZKA0Z8YelV3qAvRltuwACWXpnxtneF7VAMztOTAi3t4laVSaE4Znq4LMPeGUIYWEvKEk5r3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js" integrity="sha512-S6SXKUZ11xkCoD/UuhdXG4B4iiCXng+xW2KCx0lgfQqmdqtjqGgm4WChdYIhO1F/CmH21vnkSUvPEgXNgDwkjg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="index.js" defer></script>
+<body>
+    <div class="header">
+        <div class="title">
+            <div class="intro">Data Management in <span>R</span></div>
+        </div>
+        
+        <div class="close"><i class = "fa fa-bars"></i></div>
+    </div>
+    <div class="content">
+        <div class="sidebar">
+            <ol>
+                <li>Introduction</li>
+                <ul class = "sub-list">
+                    <a href="#data-types"><li>Data Types</li></a>
+                    <a href="#data-structures"><li>Data Structures</li></a>
+                    <a href="#goals"> <li>Goals of Data Management</li></a>
+                    <a href="#packages"><li>Packages of Interest</li></a>
+                </ul>
+                <li>Import</li>
+                <ul  class = "sub-list">
+                    <a href="#import"><li>Importing Data</li></a>
+
+                </ul>
+                <li>Data Manipulation</li>
+                <ul class = "sub-list">
+                    <a href="#piping"><li>Piping Operator</li></a>
+                    <a href="#dataframes"><li>Dataframes vs Tibbles</li></a>
+                    <a href="#tibbles"><li>Tibbles vs Tribbles</li></a>
+                    <a href="#functions"><li>Functions</li></a>
+                    <a href="#vfunctions"><li>Vector Functions</li></a>
+                    <a href="#jfunctions"><li>Join Datasets</li></a>
+                    <a href="#gathering"><li>Transforming Datasets</li></a>
+
+                </ul>
+                <li>Data Exploration</li>
+                <li>Data Communication</li>
+                <ul class = "sub-list">
+                    <a href="#rmarkdown"><li>Introduction to Markdown</li></a>
+                    <a href="#embeddmark"><li>Code Chunks</li></a>
+                </ul>
+                <li>Who am I?</li>
+            </ol>
+        </div>
+        <div class="main">
+
+            <div class="introduction none">
+                <h2 id = "data-types">Data Types in R</h2>
+                <p>Data types are the classification or categorization of data items. Data types represent a kind of value which determines what operations can be performed on that data. Numeric, character, and logical are the three most commonly used data types in R. Here's an overview of the different data types in <span style = "color:blue">R</span> - </p>
+                <ol>
+                    <li>Numeric</li>
+                    <p>Numeric data types are numbers stored in R objects. They can be integers such as 1, 2, 3, or floating-point numbers such as 1.2, 2.5, 3.7. They are used for mathematical calculations.</p>
+                    <pre class="code">numeric_vector <- c(1.2, 2.5, 3.7)</pre>
+                    <li>Character</li>
+                    <p>Character data types are used to store strings of text. They are created by enclosing the text within double or single quotes.</p>
+                    <pre class="code">character_vector <- c("apple", "banana", "cherry")</pre>
+                    <li>Logical</li>
+                    <p>Logical data types are used to store logical values. They can be either TRUE or FALSE.</p>
+                    <pre class="code">logical_vector <- c(T, F, T)</pre>
+                    <li>Factor</li>
+                    <p>Factor data types are used to store categorical data. They can be ordered or unordered. They are created using the factor() function.</p>
+                    <pre class="code">factor_vector <- factor(c("apple", "banana", "cherry"))</pre>
+                    <li>Complex</li>
+                    <p>Complex data types are used to store complex numbers. They are created using the complex() function.</p>
+                    <pre class="code">complex_vector <- complex(real = c(1, 2), imaginary = c(3, 4))</pre>
+                    <li>Raw</li>
+                    <p>Raw data types are used to store raw bytes. They are created using the charToRaw() function.</p>
+                    <pre class="code">raw_vector <- charToRaw(c("apple", "banana", "cherry"))</pre>
+                    <li>Data and Time</li>
+                    <p>Data and time data types are used to store date and time values. They are created using the as.Date() and as.POSIXct() functions.</p>
+                    <pre class = "code">today <- Sys.Date()                  # Date
+                        current_time <- Sys.time()           # Date-time (POSIXct)
+                        </pre>
+                </ol>
+                <div class = "plot"> <img src = "https://sydney-informatics-hub.github.io/lessonbmc/fig/Rvariablesdata.jpg" alt=""></div>
+                <h2 id = "data-structures">Data Structures in R</h2>
+                <p>Data structures are fundamental components in computer science and programming. They are used to organize, store, and manipulate data efficiently. The choice of the right data structure depends on the specific problem you are trying to solve and the operations you need to perform on the data. Here's an overview of some common data structures used in <span style = "color:blue">R</span> - </p>
+                <ol>
+                    <li>Scalar</li>
+                    <p>A scalar value refers to a single existing value, it could be in any data form (numeric, character, factor, logical, etc). For example, 1 is a scalar numeric value, 'a' is a scalar character value, F is a scalar logical value.</p>
+                    <pre class="code">scalar_numeric <- 1
+                        scalar_character <- "a"
+                        scalar_logical <- F
+                        </pre>
+                    <li>Vector</li>
+                    <p>A vector is the most basic data structure in R. It can hold elements of the same data type. Vectors can be numeric, character, logical, or other data types.</p>
+                    <pre class="code">numeric_vector <- c(1.2, 2.5, 3.7)
+                        character_vector <- c("apple", "banana", "cherry")
+                        </pre>
+                    <li>Matrices</li>
+                    <p>A matrix is a two-dimensional rectangular data set that contains elements of the same data type arranged in rows and columns. It can be created using a vector input to the matrix() function.</p>
+                    <pre class="code">matrix(1:6, nrow = 2, ncol = 3)
+                        </pre>
+                    <li>Data.frame</li>
+                    <p>A data frame is a two-dimensional data structure where each column can have a different data type. Data frames are commonly used for representing datasets. It can be created using the data.frame() function.</p>
+                    <pre class ="code">df <- data.frame(Name = c("Alice", "Bob", "Charlie"),
+                       \t \t \t Age = c(25, 30, 22))</pre>
+                    <li>List</li>
+                    <p>A list is a collection of objects that can be of different data types. It can be created using the list() function.</p>
+                    <pre class = "code">list(number_vector = 1:3,
+                    \t character_vector = c("a", "b", "c"),
+                    \t matrix_mine = matrix(1:6, nrow = 2, ncol = 3))</pre>
+                    <li>Tables</li>
+                    <p>A table is a special type of data frame used for representing categorical data. It can be created using the table() function.</p>
+                    <pre class = "code">table(c("a", "b", "c", "a", "b", "c"))</pre>
+                    <li>Arrays</li>
+                    <p>An array is a multi-dimensional data structure that can hold elements of the same data type. It can be created using the array() function.</p>
+                    <pre class = "code">array(1:6, dim = c(2, 3))</pre>
+                </ol>
+                <h2 id = "goals">Goals of Data Management in R</h2>
+                <p>Data management is the process of ingesting, storing, organizing, and maintaining the data created and collected by an organization. It is a crucial part of the data science workflow. The goals of data management are - </p>
+                <ol>
+                            <li><b>data quality</b></li>
+                            <p>Data quality refers to the accuracy, completeness, and consistency of data. It is important to ensure data quality because it affects the accuracy of the results of data analysis. Data quality can be improved by performing data cleaning operations such as removing duplicate values, handling missing values, and correcting inconsistent values.</p>
+                            <li><b>Data Organization</b></li>
+                            <p>Structure data in a clear and understandable manner. This includes organizing data frames, naming conventions, and creating data dictionaries.</p>
+                            <li><b>Data Documentation</b></li>
+                            <p> Document data sources, data cleaning processes, and data transformations. Use comments and metadata to describe variables and datasets.</p>
+                            <li><b>Data Cleaning</b></li>
+                            <p> Data cleaning is the process of detecting and correcting corrupt or inaccurate records from a dataset. It is a crucial step in data management because it ensures data quality. Data cleaning can be performed using the dplyr package.</p>
+                            <li><b>Data Transformation</b></li>
+                            <p>Data transformation is the process of converting data from one format or structure into another format or structure. It is a crucial step in data management because it ensures data quality. Data transformation can be performed using the dplyr package.</p>
+                            <li><b>Data Reproducibility</b></li>
+                            <p>Data reproducibility is the process of reproducing the results of a data analysis. It is a crucial step in data management because it ensures data quality. Data reproducibility can be performed using the dplyr package.</p>
+                            <li><b>Data Exploration</b></li>
+                            <p>Data exploration is the process of analyzing data to discover patterns, trends, and relationships. It is a crucial step in data management because it ensures data quality. Data exploration can be performed using the dplyr package.</p>
+                            <li><b>Data Visualization</b></li>
+                            <p>Data visualization is the process of representing data in the form of charts, graphs, and maps. It is a crucial step in data management because it ensures data quality. Data visualization can be performed using the ggplot2 package.</p>
+                            <li><b>Data Communication</b></li>
+                            <p>Data communication is the process of presenting data in a clear and understandable manner. It is a crucial step in data management because it ensures data quality.</p>                
+                </ol>
+                <h2 id = "packages">Packages of Interest</h2>
+                <p>There are many packages available in <span style = "color:blue">R</span> for data management. Here's an overview of some of the most commonly used packages - </p>
+                <ol>
+                        <li><b>tidyverse</b></li>
+                        <p>tidyverse is a collection of packages for data management. It provides a set of functions for data manipulation, data visualization, and data communication. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("tidyverse")</pre>
+                        <p>The packages available within tidyverse are as follows </p>
+                        <p><span style="color:blue">dplyr</span> &amp; <span style="color:red">ggplot2</span> &amp; <span style="color:green">tidyr</span> &amp; <span style="color:orange">readr</span> &amp; <span style="color:purple">purrr</span> &amp; <span style="color:brown">tibble</span> &amp; <span style="color:teal">stringr</span> &amp; <span style="color:gray">forcats</span></p>
+                        <p>Alternatively you can install many of the common packages manually, as below -</p>
+                        <li>Purr</li>
+                        <p>Purr is a package for list manipulation.</p>
+                        <pre class="code">install.packages("purr")</pre>
+                        <li><b>dplyr</b></li>
+                        <p>dplyr is a package for data manipulation. It provides a set of functions for manipulating data frames. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("dplyr")</pre>
+                        <li><b>tidyr</b></li>
+                        <p>tidyr is a package for data manipulation. It provides a set of functions for manipulating data frames. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("tidyr")</pre>
+                        <li><b>stringr</b></li>
+                        <p>stringr is a package for string manipulation. It provides a set of functions for manipulating strings. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("stringr")</pre>
+                        <li><b>lubridate</b></li>
+                        <p>lubridate is a package for date manipulation. It provides a set of functions for manipulating dates. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("lubridate")</pre>
+                        <li><b>readr</b></li>
+                        <p>readr is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("readr")</pre>
+                        <li><b>readxl</b></li>
+                        <p>readxl is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("readxl")</pre>
+                        <li><b>haven</b></li>
+                        <p>haven is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("haven")</pre>
+                        <li><b>jsonlite</b></li>
+                        <p>jsonlite is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("jsonlite")</pre>
+                        <li><b>xml2</b></li>
+                        <p>xml2 is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("xml2")</pre>
+                        <li><b>httr</b></li>
+                        <p>httr is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("httr")</pre>
+                        <li><b>rvest</b></li>
+                        <p>rvest is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("rvest")</pre>
+                        <li><b>pdftools</b></li>
+                        <p>pdftools is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("pdftools")</pre>
+                        <li><b>magick</b></li>
+                        <p>magick is a package for data importation. It provides a set of functions for importing data. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("magick")</pre>
+                        <li><b>ggplot2</b></li>
+                        <p>ggplot2 is a package for data visualization. It provides a set of functions for creating plots. It is a part of the tidyverse collection of packages.</p>
+                        <pre class = "code">install.packages("ggplot2")</pre>
+                    </ol>
+            </div>
+
+            <div class="import none">
+                <h2 id = "import">Importing Data in R</h2>
+                <p>Before we delve into data importation, it is important to understand the differences between absolute and relative paths. </p>
+                <ol>
+                    <li><b>Absolute Path</b></li>
+                    <p>An absolute path is a path that points to the same location on one file system regardless of the working directory or combined paths. It is a complete path from start of actual filesystem from / directory.</p>
+                    <pre class="code">read.csv("C:\Users\Documents\file.txt")</pre>
+                    <li><b>Relative Path</b></li>
+                    <p>A relative path is a path that points to the same location on one file system relative to the current working directory. It is a path relative to the current working directory.</p>
+                    <pre class="code">setwd("C:\Users\Documents") \br read.csv("file.txt")</pre>
+                    <p>In this case, we have set the working directory to <span style="color: red;">"C:\Users\Documents"</span> which allows us to specify the relative path without specifying the entire path.</p>
+                </ol>
+                <div class="plot"> <img src = "import.gif" alt=""></div>
+                <p>Data can be imported into R from a variety of sources such as CSV files, Excel files, and databases. Here's an overview of some common data import methods in <span style = "color:blue">R</span> - </p>
+                <ol>
+                    <li>CSV Files</li>
+                    <p>CSV files are text files that store tabular data in plain text format. They are commonly used for storing data in spreadsheets and databases. CSV files can be imported into R using the read.csv() function.</p>
+                    <pre class="code">df <- read.csv("data.csv")</pre>
+                    <p>Since CSV files may often stored using different separtors. The following arguments may be of use - </p>
+                    <pre class="code">df <- read.csv("data.csv", sep = ",", header = TRUE, stringsAsFactors = FALSE)</pre>                    
+                    <li>dat Files</li>
+                    <p>dat files are text files that store tabular data in plain text format. They are commonly used for storing data in spreadsheets and databases. dat files can be imported into R using the read.table() function.</p>
+                    <pre class="code">df <- read.table("data.dat")</pre>
+                    <li>Text Files</li>
+                    <p>Text files are files that store text in plain text format. They are commonly used for storing data in spreadsheets and databases. Text files can be imported into R using the readLines() function.</p>
+                    <pre class="code">df <- readLines("data.txt")</pre>
+                    <li>SPSS Files</li>
+                    <p>SPSS files are files that store data in SPSS format. They are commonly used for storing data in spreadsheets and databases. SPSS files can be imported into R using the haven package.</p>
+                    <pre class="code">df <- haven::read_sav("data.sav")</pre>
+                    <li>Stata Files</li>
+                    <p>Stata files are files that store data in Stata format. They are commonly used for storing data in spreadsheets and databases. Stata files can be imported into R using the haven package.</p>
+                    <pre class="code">df <- haven::read_dta("data.dta")</pre>
+                    <li>SAS Files</li>
+                    <p>SAS files are files that store data in SAS format. They are commonly used for storing data in spreadsheets and databases. SAS files can be imported into R using the haven package.</p>
+                    <pre class="code">df <- haven::read_sas("data.sas")</pre>
+                    <li>Excel Files</li>
+                    <p>Excel files are spreadsheet files that store tabular data in binary format. They are commonly used for storing data in spreadsheets and databases. Excel files can be imported into R using the read_excel() function.</p>
+                    <pre class="code">df <- read_excel("data.xlsx")</pre>
+                    <li>Database</li>
+                    <p>A database is a collection of data stored in a computer system. It is commonly used for storing data in spreadsheets and databases. Databases can be imported into R using the dbConnect() function.</p>
+                    <pre class="code">df <- dbConnect("data.db")</pre>
+                    <li>API</li>
+                    <p>An API is a set of functions and procedures that allow the creation of applications that access the features or data of an operating system, application, or other service. It is commonly used for storing data in spreadsheets and databases. APIs can be imported into R using the httr package.</p>
+                    <pre class="code">df <- httr::GET("https://api.data.com")</pre>
+                    <li>Web Scraping</li>
+                    <p>Web scraping is the process of extracting data from websites. It is commonly used for storing data in spreadsheets and databases. Web scraping can be performed using the rvest package.</p>
+                    <pre class="code">df <- rvest::read_html("https://www.data.com")</pre>
+                    <li>Text Files</li>
+                    <p>Text files are files that store text in plain text format. They are commonly used for storing data in spreadsheets and
+                        databases. Text files can be imported into R using the readLines() function.</p>
+                    <pre class="code">df <- readLines("data.txt")</pre>
+                    <li>JSON Files</li>
+                    <p>JSON files are files that store data in JSON format. They are commonly used for storing data in spreadsheets and databases. JSON files can be imported into R using the jsonlite package.</p>
+                    <pre class="code">df <- jsonlite::fromJSON("data.json")</pre>
+                    <li>XML Files</li>
+                    <p>XML files are files that store data in XML format. They are commonly used for storing data in spreadsheets and databases. XML files can be imported into R using the XML package.</p>
+                    <pre class="code">df <- XML::xmlParse("data.xml")</pre>
+                    <li>PDF Files</li>
+                    <p>PDF files are files that store data in PDF format. They are commonly used for storing data in spreadsheets and databases. PDF files can be imported into R using the pdftools package.</p>
+                    <pre class="code">df <- pdftools::pdf_text("data.pdf")</pre>
+                    <li>Images</li>
+                    <p>Images are files that store data in image format. They are commonly used for storing data in spreadsheets and databases. Images can be imported into R using the magick package.</p>
+                    <pre class="code">df <- magick::image_read("data.png")</pre>
+                </ol>
+            </div>
+
+            <div class = "data-manipulation none">
+                <h2 id = "piping">Introducing the Piping Operator</h2>
+                <p>The piping operator is a special operator that allows you to chain multiple operations together. It is a crucial part of the tidyverse collection of packages.</p>
+                <div class="plot"> <img src = "https://cosimameyer.com/images/single-blog/shortcut_pipe.gif" alt=""></div>
+                <p>The piping operator, written as %>%, has been a longstanding feature of the magrittr package for R. It takes the output of one function and passes it into another function as an argument. This allows us to link a sequence of analysis steps. For example, we can use the piping operator to chain together multiple operations.</p>
+                <pre class="code">c(1,2,4,5,6,7,8) %>% sum() \br # Typical Code \br sum(1,2,3,4,5,6,7,8)</pre>
+                <pre class="code">c(1,2,4,5,6,7,8) %>% sum() %>% mean() \br # Typical Code \br mean(sum(c(1,2,4,5,6,7,8)))</span></pre>
+                <pre class="code">c(1,2,4,5,6,7,8) %>% sum() %>% mean() %>% round() \br # Typical Code \br round(mean(sum(c(1,2,4,5,6,7,8))))</pre>
+                <p>To visualize this process, imagine a factory with different machines placed along a conveyor belt. Each machine is a function that performs a stage of our analysis, like filtering or transforming data. The pipe therefore works like a conveyor belt, transporting the output of one machine to another for further processing.</p>
+                <h2 id = "dataframes">Dataframes vs Tibbles</h2>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Data Frames</th>
+                        <th>Tibbles</th>
+                    </tr>
+                    <tr>
+                        <td>Availability</td>
+                        <td>Base R</td>
+                        <td>Tidyverse</td>
+                    </tr>
+                    <tr>
+                        <td>Column Name Conversion</td>
+                        <td>Automatic</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>Data Type Coercion</td>
+                        <td>Automatic</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>Row Names</td>
+                        <td>Enabled by default</td>
+                        <td>Disabled by default</td>
+                    </tr>
+                    <tr>
+                        <td>Strict Printing</td>
+                        <td>Less strict</td>
+                        <td>Strict</td>
+                    </tr>
+                    <tr>
+                        <td>Subsetting</td>
+                        <td>Use of `[[]]` for columns and `[ ]` for rows</td>
+                        <td>Consistent use of `[]` for both columns and rows</td>
+                    </tr>
+                    <tr>
+                        <td>Data Type Columns</td>
+                        <td>Not available</td>
+                        <td>Includes a data type column</td>
+                    </tr>
+                </table>
+                <p>Data frames and tibbles are both tabular data structures in R, but they have notable differences. Data frames, part of base R, automatically convert column names, can coerce data types, have row names by default, and offer more relaxed printing. Tibbles, associated with the tidyverse, do not alter column names, avoid data type coercion, exclude row names by default, and provide stricter and more informative printing. Moreover, tibbles allow consistent subsetting and include a data type column. The choice between data frames and tibbles depends on one's preference and the context of data analysis, with tibbles often favored for their user-friendliness within modern data analysis workflows.</p>
+                <pre class = "code">
+                        # Creating a data frame
+                        df <- data.frame( 
+                        \t    name = c("Alice", "Bob", "Charlie"),
+                        \t    age = c(25, 30, 35),
+                        \t    gender = c("F", "M", "M")
+                        )
+                        print(df)
+                        # Creating a tibble
+                        library(tibble)
+                        tb <- tibble(
+                         \t   name = c("Alice", "Bob", "Charlie"),
+                         \t   age = c(25, 30, 35),
+                         \t   gender = c("F", "M", "M")
+                        )
+                        print(tb)
+                </pre>
+                <h2 id = "tibbles">Tibbles vs Tribbles</h2>
+                <table>
+                    <tr>
+                      <th></th>
+                      <th>Tibbles</th>
+                      <th>Tribbles</th>
+                    </tr>
+                    <tr>
+                      <td>Availability</td>
+                      <td>Part of the tidyverse</td>
+                      <td>Introduced through `tribble`</td>
+                    </tr>
+                    <tr>
+                      <td>Column Names</td>
+                      <td>Preserved as is</td>
+                      <td>Specified with `~`</td>
+                    </tr>
+                    <tr>
+                      <td>Data Type Coercion</td>
+                      <td>Not automatic</td>
+                      <td>Not automatic</td>
+                    </tr>
+                    <tr>
+                      <td>Printing</td>
+                      <td>User-friendly, limited display</td>
+                      <td>User-friendly, limited display</td>
+                    </tr>
+                  </table>
+                <pre class = "code">
+                            # Creating a tibble
+                            library(tibble)
+                            tb <- tibble(
+                             \t   name = c("Alice", "Bob", "Charlie"),
+                             \t   age = c(25, 30, 35),
+                             \t   gender = c("F", "M", "M")
+                            )
+                            print(tb)
+                            
+                            # Creating a tribble
+                            library(tibble)
+                            trb <- tribble(
+                                \t  ~name, ~age, ~gender,
+                                \t  "Alice", 25, "F",
+                                \t  "Bob", 30, "M",
+                                \t  "Charlie", 35, "M"
+                            )
+                            print(trb)
+                </pre>
+                <h2 id = "functions">Dplyr Functions</h2>
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Function</th>
+                        <th>Utility</th>
+                    </tr>
+                    <!-- Data frame verbs -->
+                    <tr>
+                        <td>Data frame verbs (Rows)</td>
+                        <td>arrange()</td>
+                        <td>Order rows using column values</td>
+                    </tr>
+                    <tr>
+                        <td>Data frame verbs (Rows)</td>
+                        <td>distinct()</td>
+                        <td>Keep distinct/unique rows</td>
+                    </tr>
+                    <tr>
+                        <td>Data frame verbs (Rows)</td>
+                        <td>filter()</td>
+                        <td>Keep rows that match a condition</td>
+                    </tr>
+                    <tr>
+                        <td>Data frame verbs (Rows)</td>
+                        <td>slice()</td>
+                        <td>Subset rows using their positions</td>
+                    </tr>
+                    <!-- Columns -->
+                    <tr>
+                        <td>Columns</td>
+                        <td>mutate()</td>
+                        <td>Create, modify, and delete columns</td>
+                    </tr>
+                    <tr>
+                        <td>Columns</td>
+                        <td>select()</td>
+                        <td>Keep or drop columns using their names and types</td>
+                    </tr>
+                    <!-- Groups -->
+                    <tr>
+                        <td>Groups</td>
+                        <td>group_by()</td>
+                        <td>Group data by one or more variables</td>
+                    </tr>
+                    <!-- Data frames -->
+                    <tr>
+                        <td>Data frames</td>
+                        <td>bind_cols()</td>
+                        <td>Bind multiple data frames by column</td>
+                    </tr>
+                    <tr>
+                        <td>Data frames</td>
+                        <td>bind_rows()</td>
+                        <td>Bind multiple data frames by row</td>
+                    </tr>
+                    <!-- Vector functions -->
+                    <tr>
+                        <td>Vector functions</td>
+                        <td>between()</td>
+                        <td>Detect where values fall in a specified range</td>
+                    </tr>
+                    <tr>
+                        <td>Vector functions</td>
+                        <td>coalesce()</td>
+                        <td>Find the first non-missing element</td>
+                    </tr>
+                    <!-- Add more rows for the remaining functions and categories -->
+                </table>
+                <p>In simple words, the dplyr package in R is like a set of powerful tools that help you easily and efficiently manipulate and transform data in data frames. It provides functions for filtering, sorting, summarizing, and modifying your data so that you can perform tasks like data cleaning and analysis with less code and more clarity. Think of it as a Swiss Army knife for working with data tables in R.</p>
+                <h2>Arrange Function</h2>
+                <p>The arrange() function is used to sort rows in ascending or descending order. It takes a data frame as input and returns a data frame with the rows sorted in ascending or descending order. </p>
+                <pre class = "code">
+                            # Sort rows in ascending order
+                            df <- arrange(df, age)
+                            # Sort rows in descending order
+                            df <- arrange(df, desc(age))
+                </pre>
+                <h2>Distinct Function</h2>
+                <p>The distinct() function is used to remove duplicate rows from a data frame. It takes a data frame as input and returns a data frame with the duplicate rows removed. </p>
+                <pre class = "code">
+                            # Remove duplicate rows
+                            df <- distinct(df)
+                </pre>
+                <h2>Filter Function</h2>
+                <p>The filter() function is used to select rows that match a condition. It takes a data frame as input and returns a data frame with the rows that match the condition. </p>
+                <pre class = "code">
+                            # Select rows where age is greater than 30
+                            df <- filter(df, age > 30)
+                </pre>
+                <h2>Filtering with if_any(), if_all(), and between()</h2>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <!-- if_any() -->
+                    <tr>
+                        <td>if_any()</td>
+                        <td>Filter rows if any of the specified conditions are met.</td>
+                        <td>
+                            <pre>
+            library(dplyr)
+
+            # Sample data frame
+            data <- data.frame(
+            Name = c("Alice", "Bob", "Charlie", "David"),
+            Age = c(25, 30, 22, 28),
+            Score = c(90, 75, 85, 95)
+            )
+
+            filtered_data <- data %>%
+            filter(if_any(c(Age, Score), ~ . >= 30))
+                            </pre>
+                        </td>
+                    </tr>
+                    <!-- if_all() -->
+                    <tr>
+                        <td>if_all()</td>
+                        <td>Filter rows if all of the specified conditions are met.</td>
+                        <td>
+                            <pre>
+            library(dplyr)
+
+            # Sample data frame
+            data <- data.frame(
+            Name = c("Alice", "Bob", "Charlie", "David"),
+            Age = c(25, 30, 22, 28),
+            Score = c(90, 75, 85, 95)
+            )
+
+            filtered_data <- data %>%
+            filter(if_all(c(Age, Score), ~ . >= 30))
+                            </pre>
+                        </td>
+                    </tr>
+                    <!-- between() -->
+                    <tr>
+                        <td>between()</td>
+                        <td>Filter rows where a variable's value is within a specified range.</td>
+                        <td>
+                            <pre>
+            library(dplyr)
+
+            # Sample data frame
+            data <- data.frame(
+            Name = c("Alice", "Bob", "Charlie", "David"),
+            Age = c(25, 30, 22, 28),
+            Score = c(90, 75, 85, 95)
+            )
+
+            filtered_data <- data %>%
+            filter(between(Age, 25, 30))
+                            </pre>
+                        </td>
+                    </tr>
+                </table>
+            <h2>Mutate Function</h2>
+            <p>The mutate() function is used to create new columns or modify existing columns. It takes a data frame as input and returns a data frame with the new or modified columns. </p>
+            <pre class = "code">
+                        # Create a new column
+                        df <- mutate(df, age_group = ifelse(age < 30, "young", "old"))
+                        # Modify an existing column
+                        df <- mutate(df, age = age + 1)
+            </pre>
+                <h2>Using mutate() with across() and c_across()</h2>
+            <table>
+                <tr>
+                    <th>Function</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <!-- across() -->
+                <tr>
+                    <td>across()</td>
+                    <td>Apply a function or functions to multiple columns simultaneously within the mutate() function.</td>
+                    <td>
+                        <pre>
+        library(dplyr)
+
+        # Sample data frame
+        data <- data.frame(
+        Name = c("Alice", "Bob", "Charlie", "David"),
+        Math_Score = c(90, 75, 85, 95),
+        English_Score = c(88, 92, 78, 86)
+        )
+
+        mutated_data <- data %>%
+        mutate(across(.cols = starts_with("Math"), .fns = ~ . * 1.1))
+                        </pre>
+                    </td>
+                </tr>
+                <!-- c_across() -->
+                <tr>
+                    <td>c_across()</td>
+                    <td>Combine values from multiple columns into a single column within the mutate() function.</td>
+                    <td>
+                        <pre>
+        library(dplyr)
+
+        # Sample data frame
+        data <- data.frame(
+        Name = c("Alice", "Bob", "Charlie", "David"),
+        Math_Score = c(90, 75, 85, 95),
+        English_Score = c(88, 92, 78, 86)
+        )
+
+        mutated_data <- data %>%
+        mutate(Total_Score = c_across(starts_with("Score")))
+                        </pre>
+                    </td>
+                </tr>
+                <!-- Add more rows for other functions and examples within mutate() -->
+            </table>
+            <h2>Select Function</h2>
+            <p>The select() function is used to select columns from a data frame. It takes a data frame as input and returns a data frame with the selected columns. </p>
+            <pre class = "code">
+                        # Select columns by name
+                        df <- select(df, name, age)
+                        # Select columns by type
+                        df <- select(df, where(is.numeric))
+                        # Select columns by position
+                        df <- select(df, 1:3)
+            </pre>
+            <h2>Selecting with starts_with(), ends_with(), contains(), and matches()</h2>
+            <table>
+                <tr>
+                    <th>Function</th>
+                    <th>Description</th>
+                    <th>Syntax</th>
+                </tr>
+                <!-- starts_with() -->
+                <tr>
+                    <td>starts_with()</td>
+                    <td>Select columns that start with a specific prefix.</td>
+                    <td><code>select(starts_with("prefix"))</code></td>
+                </tr>
+                <!-- ends_with() -->
+                <tr>
+                    <td>ends_with()</td>
+                    <td>Select columns that end with a specific suffix.</td>
+                    <td><code>select(ends_with("suffix"))</code></td>
+                </tr>
+                <!-- contains() -->
+                <tr>
+                    <td>contains()</td>
+                    <td>Select columns that contain a specific substring.</td>
+                    <td><code>select(contains("substring"))</code></td>
+                </tr>
+                <!-- matches() -->
+                <tr>
+                    <td>matches()</td>
+                    <td>Select columns based on regular expressions.</td>
+                    <td><code>select(matches("regex_pattern"))</code></td>
+                </tr>
+                <tr>
+                    <td>everything()</td>
+                    <td>Select all columns.</td>
+                    <td><code>select(everything())</code></td>
+                </tr>
+                <tr>
+                    <td>where()</td>
+                    <td>Select columns based on a predicate function.</td>
+                    <td><code>select(where(is.numeric))</code></td>
+                </tr>
+            </table>
+            <h2>Group By and Summarise Function</h2>
+            <p>The group_by() function is used to group rows by one or more variables. It takes a data frame as input and returns a data frame with the rows grouped by the specified variables. </p>
+            <p>The summarise() function is used to summarise data by collapsing multiple values into a single value. It is often used in conjunction with the group_by() function to summarise data by groups.</p>
+            <pre class = "code">
+                library(dplyr)
+
+                # Sample data frame
+                data <- data.frame(
+                Name = c("Alice", "Bob", "Charlie", "David"),
+                Math_Score = c(90, 75, 85, 95),
+                English_Score = c(88, 92, 78, 86)
+                )
+
+                grouped_data <- data %>%
+                group_by(Name) %>%
+                summarise(Average_Math_Score = mean(Math_Score), Average_English_Score = mean(English_Score))
+            </pre>
+            <h2 id="vfunctions">Vector Functions in dplyr</h2>
+            <table>
+                <tr>
+                    <th>Function</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>between()</td>
+                    <td>Detect where values fall in a specified range.</td>
+                </tr>
+                <tr>
+                    <td>case_match()</td>
+                    <td>A general vectorized switch() function.</td>
+                </tr>
+                <tr>
+                    <td>case_when()</td>
+                    <td>A general vectorized if-else function.</td>
+                </tr>
+                <tr>
+                    <td>coalesce()</td>
+                    <td>Find the first non-missing element among multiple vectors.</td>
+                </tr>
+                <tr>
+                    <td>consecutive_id()</td>
+                    <td>Generate a unique identifier for consecutive combinations of values.</td>
+                </tr>
+                <tr>
+                    <td>cumall(), cumany(), cummean()</td>
+                    <td>Cumulative versions of any(), all(), and mean() functions.</td>
+                </tr>
+                <tr>
+                    <td>desc()</td>
+                    <td>Sort data in descending order.</td>
+                </tr>
+                <tr>
+                    <td>if_else()</td>
+                    <td>Vectorized if-else function.</td>
+                </tr>
+                <tr>
+                    <td>lag(), lead()</td>
+                    <td>Compute lagged or leading values in a vector.</td>
+                </tr>
+                <tr>
+                    <td>n_distinct()</td>
+                    <td>Count unique combinations in a vector.</td>
+                </tr>
+                <tr>
+                    <td>na_if()</td>
+                    <td>Convert specified values to NA in a vector.</td>
+                </tr>
+                <tr>
+                    <td>near()</td>
+                    <td>Compare two numeric vectors to check if they are nearly equal.</td>
+                </tr>
+                <tr>
+                    <td>nth(), first(), last()</td>
+                    <td>Extract the nth, first, or last value from a vector.</td>
+                </tr>
+                <tr>
+                    <td>ntile()</td>
+                    <td>Bucket a numeric vector into n groups based on quantiles.</td>
+                </tr>
+                <tr>
+                    <td>order_by()</td>
+                    <td>A helper function for ordering in window functions.</td>
+                </tr>
+                <tr>
+                    <td>percent_rank(), cume_dist()</td>
+                    <td>Proportional ranking functions for a vector.</td>
+                </tr>
+                <tr>
+                    <td>recode(), recode_factor()</td>
+                    <td>Recode values in a vector.</td>
+                </tr>
+                <tr>
+                    <td>row_number(), min_rank(), dense_rank()</td>
+                    <td>Integer ranking functions for a vector.</td>
+                </tr>
+            </table>
+            <h2 id="using-case-when-and-case-match">Using case_when() and case_match()</h2>
+
+            <pre style="color: red;" class = "code"># Example for case_match()
+            library(dplyr)
+
+            data <- data.frame(Category = c("A", "B", "C", "D"))
+
+            mutated_data <- data %>%
+            mutate(Result = case_match(Category, "A" = "Alpha", "B" = "Beta", "C" = "Charlie"))
+            </pre>
+
+            <pre style="color: purple;" class = "code"># Example for case_when()
+            library(dplyr)
+
+            data <- data.frame(Score = c(80, 95, 60, 75))
+
+            mutated_data <- data %>%
+            mutate(Grade = case_when(
+                Score >= 90 ~ "A",
+                Score >= 80 ~ "B",
+                Score >= 70 ~ "C",
+                TRUE ~ "D"
+            ))
+            </pre>
+            <h2 id="using-if-else-with-mutate">Using if_else() with mutate()</h2>
+            <pre class = "code">
+                library(dplyr)
+
+                data <- data.frame(Score = c(80, 95, 60, 75))
+
+                mutated_data <- data %>%
+                mutate(Grade = if_else(Score >= 90, "A", "B"))
+            </pre>
+
+            <h2 id="using-lag-and-lead-with-mutate">Using lag() and lead() with mutate()</h2>
+
+            <pre class = "code">
+                library(dplyr)
+
+                data <- data.frame(Score = c(80, 95, 60, 75))
+
+                mutated_data <- data %>%
+                mutate(Lagged_Score = lag(Score), Leading_Score = lead(Score))
+            </pre>
+            <h2 id = "jfunctions">Joining Datasets</h2>
+            <table>
+                <tr>
+                    <th>Function</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>anti_join()</td>
+                    <td>Return rows from the left table that are not present in the right table.</td>
+                </tr>
+                <tr>
+                    <td>full_join()</td>
+                    <td>Return all rows from both tables.</td>
+                </tr>
+                <tr>
+                    <td>inner_join()</td>
+                    <td>Return rows that match in both tables.</td>
+                </tr>
+                <tr>
+                    <td>left_join()</td>
+                    <td>Return all rows from the left table.</td>
+                </tr>
+                <tr>
+                    <td>right_join()</td>
+                    <td>Return all rows from the right table.</td>
+                </tr>
+                <tr>
+                    <td>semi_join()</td>
+                    <td>Return rows from the left table that are present in the right table.</td>
+                </tr>
+            </table>
+            <div class = "plot_side">
+                <table border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td style="color: blue;">Alice</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td style="color: blue;">Bob</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td style="color: blue;">Charlie</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td style="color: blue;">David</td>
+                    </tr>
+                </table>
+            
+                <table border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td style="color: red;">95</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td style="color: red;">89</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td style="color: red;">78</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td style="color: red;">92</td>
+                    </tr>
+                </table>
+                <img src = "join.gif">
+            </div>
+            <h2>Using Join Functions</h2>
+            <pre class = "code">
+                library(dplyr)
+
+                # Sample data frames
+                left_data <- data.frame(
+                Name = c("Alice", "Bob", "Charlie", "David"),
+                Age = c(25, 30, 22, 28)
+                )
+
+                right_data <- data.frame(
+                Name = c("Alice", "Bob", "Charlie", "David"),
+                Score = c(90, 75, 85, 95)
+                )
+
+                # Join data frames
+                joined_data <- left_data %>%
+                inner_join(right_data, by = "Name")
+            </pre>
+            <h2 id = "gathering">Tranform Datasets</h2>
+            <p>The gather() function is used to transform a dataset from wide format to long format. It takes a data frame as input and returns a data frame with the columns gathered into key-value pairs. </p>
+            <pre class = "code">
+                library(tidyr)
+
+                # Sample data frame
+                data <- data.frame(
+                Name = c("Alice", "Bob", "Charlie", "David"),
+                Math_Score = c(90, 75, 85, 95),
+                English_Score = c(88, 92, 78, 86)
+                )
+
+                # Gather columns
+                gathered_data <- data %>%
+                gather(key = "Subject", value = "Score", Math_Score, English_Score)
+            </pre>
+            <h2>Spread Datasets</h2>
+            <p>The spread() function is used to transform a dataset from long format to wide format. It takes a data frame as input and returns a data frame with the key-value pairs spread across multiple columns. </p>
+            <pre class = "code">
+                library(tidyr)
+
+                # Sample data frame
+                data <- data.frame(
+                Name = c("Alice", "Bob", "Charlie", "David"),
+                Math_Score = c(90, 75, 85, 95),
+                English_Score = c(88, 92, 78, 86)
+                )
+
+                # Spread columns
+                spread_data <- data %>%
+                gather(key = "Subject", value = "Score", Math_Score, English_Score)
+            </pre>
+            <h2>Separate Datasets</h2>
+            <p>The separate() function is used to separate a column into multiple columns. It takes a data frame as input and returns a data frame with the column separated into multiple columns. </p>
+            <pre class = "code">
+                library(tidyr)
+
+                # Sample data frame
+                data <- data.frame(
+                Name = c("Alice", "Bob", "Charlie", "David"),
+                Age = c("25, 30", "30, 35", "22, 27", "28, 33")
+                )
+
+                # Separate column
+                separated_data <- data %>%
+                separate(Age, into = c("Age_1", "Age_2"), sep = ", ")
+            </pre>
+            <h2>Unite Datasets</h2>
+            <p>The unite() function is used to unite multiple columns into a single column. It takes a data frame as input and returns a data frame with the columns united into a single column. </p>
+            <pre class = "code">
+                library(tidyr)
+
+                # Sample data frame
+                data <- data.frame(
+                Name = c("Alice", "Bob", "Charlie", "David"),
+                Age_1 = c(25, 30, 22, 28),
+                Age_2 = c(30, 35, 27, 33)
+                )
+
+                # Unite columns
+                united_data <- data %>%
+                unite(Age, Age_1, Age_2, sep = ", ")
+            </pre>
+            <div class = "tables">
+                <table class="table1">
+                        <td style="text-align: center;">Spread Data (Wide Form)</td>
+                    <tr>
+                        <th>Name</th>
+                        <th>Exam 1</th>
+                        <th>Exam 2</th>
+                        <th>Exam 3</th>
+                    </tr>
+                    <tr>
+                        <td>Alice</td>
+                        <td>85</td>
+                        <td>88</td>
+                        <td>78</td>
+                    </tr>
+                    <tr>
+                        <td>Bob</td>
+                        <td>90</td>
+                        <td>92</td>
+                        <td>85</td>
+                    </tr>
+                    <tr>
+                        <td>Charlie</td>
+                        <td>78</td>
+                        <td>86</td>
+                        <td>92</td>
+                    </tr>
+                </table>
+                <table class = "table2 none">
+                    <td style="text-align: center;">Gathered Data (Long Form)</td>
+                    <tr>
+                        <th>Name</th>
+                        <th>Exam</th>
+                        <th>Score</th>
+                    </tr>
+                    <tr>
+                        <td>Alice</td>
+                        <td>Exam_1</td>
+                        <td>85</td>
+                    </tr>
+                    <tr>
+                        <td>Bob</td>
+                        <td>Exam_1</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <td>Charlie</td>
+                        <td>Exam_1</td>
+                        <td>78</td>
+                    </tr>
+                    <tr>
+                        <td>Alice</td>
+                        <td>Exam_2</td>
+                        <td>88</td>
+                    </tr>
+                    <tr>
+                        <td>Bob</td>
+                        <td>Exam_2</td>
+                        <td>92</td>
+                    </tr>
+                    <tr>
+                        <td>Charlie</td>
+                        <td>Exam_2</td>
+                        <td>86</td>
+                    </tr>
+                    <tr>
+                        <td>Alice</td>
+                        <td>Exam_3</td>
+                        <td>78</td>
+                    </tr>
+                    <tr>
+                        <td>Bob</td>
+                        <td>Exam_3</td>
+                        <td>85</td>
+                    </tr>
+                    <tr>
+                        <td>Charlie</td>
+                        <td>Exam_3</td>
+                        <td>92</td>
+                    </tr>
+                </table>
+                <button class = "toggle"> Toggle Table </button>
+            </div>
+            </div>
+
+
+            <div class = "data-exploration none">
+                <iframe src="GGplotCourse.html" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+
+            <div class = "data-communication none">
+                <h2 id = "rmarkdown">Brief Introduction to R Markdown</h2>
+                <p>R Markdown is a file format for making dynamic documents with R. An R Markdown document is written in markdown (an easy-to-write plain text format) and contains chunks of embedded R code. R Markdown files are designed to be used with the rmarkdown package. R Markdown files have the file extension “.Rmd”. When you render an R Markdown document, R Markdown converts your document into the desired output format.</p>
+                <h2>Setting up a R Markdown file - </h2>
+                <p>When you open a new R Markdown file in RStudio, a pop-up window appears that prompts you to select output format to use for the document. You can select from a variety of output formats including HTML, PDF, MS Word, and more. You can also select the default output format for all new R Markdown files in the R Markdown preferences.</p>
+                <div class ="plot">
+                    <img src = "markdown.gif">
+                </div>
+                <h2>R Markdown Syntax</h2>
+                <p>R Markdown files are written using markdown, a lightweight markup language that is easy to read and write. Markdown is a way to style text on the web. You control the display of the document; formatting words as bold or italic, adding images, and creating lists are just a few of the things we can do with Markdown. Mostly, Markdown is just regular text with a few non-alphabetic characters thrown in, like # or *.</p>
+                <table border="1">
+                    <tr>
+                        <th>R Markdown Syntax</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code># Header 1</code></td>
+                        <td>Create a top-level heading (Header 1).</td>
+                    </tr>
+                    <tr>
+                        <td><code>## Header 2</code></td>
+                        <td>Create a second-level heading (Header 2).</td>
+                    </tr>
+                    <tr>
+                        <td><code>*Italic*</code></td>
+                        <td>Italicize text using asterisks.</td>
+                    </tr>
+                    <tr>
+                        <td><code>**Bold**</code></td>
+                        <td>Make text bold using double asterisks.</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Link](https://example.com)</code></td>
+                        <td>Create a hyperlink with the specified text and URL.</td>
+                    </tr>
+                    <tr>
+                        <td><code>![Image](image.png)</code></td>
+                        <td>Embed an image in the document with alt text and image source.</td>
+                    </tr>
+                    <tr>
+                        <td><code>> Blockquote</code></td>
+                        <td>Create a blockquote for cited content.</td>
+                    </tr>
+                    <tr>
+                        <td><code>* List item 1</code></td>
+                        <td>Add an unordered list item with an asterisk.</td>
+                    </tr>
+                    <tr>
+                        <td><code>1. Numbered item</code></td>
+                        <td>Include a numbered list item.</td>
+                    </tr>
+                    <tr>
+                        <td><code>---</code></td>
+                        <td>Insert a horizontal rule (horizontal line).</td>
+                    </tr>
+                    <tr>
+                        <td><code>Inline <code> code</code> syntax</code></td>
+                        <td>Mark inline code using backticks.</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>```</code><br>
+                            <br>
+                            <code>Code block</code><br>
+                            <br>
+                            <code>```</code>
+                        </td>
+                        <td>Create a code block for displaying and formatting code.</td>
+                    </tr>
+                </table>
+                <h2 id = "embeddmark">Embedding R Code in R Markdown</h2>
+                <p>R Markdown files can contain chunks of embedded R code. You can embed an R code chunk in an R Markdown file by using the chunk option in the RStudio toolbar. You can also use the keyboard shortcut <b>Ctrl + Alt + I (Windows/Linux) or Cmd + Option + I (Mac).</b></p>
+                <div class = "plot">
+                    <video controls>
+                        <source src="vid.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <table>
+                    <tr>
+                        <th>Option</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>eval</td>
+                        <td>TRUE</td>
+                        <td>Whether to evaluate the code and include its results</td>
+                    </tr>
+                    <tr>
+                        <td>echo</td>
+                        <td>TRUE</td>
+                        <td>Whether to display code along with its results</td>
+                    </tr>
+                    <tr>
+                        <td>warning</td>
+                        <td>TRUE</td>
+                        <td>Whether to display warnings</td>
+                    </tr>
+                    <tr>
+                        <td>error</td>
+                        <td>FALSE</td>
+                        <td>Whether to display errors</td>
+                    </tr>
+                    <tr>
+                        <td>message</td>
+                        <td>TRUE</td>
+                        <td>Whether to display messages</td>
+                    </tr>
+                    <tr>
+                        <td>tidy</td>
+                        <td>FALSE</td>
+                        <td>Whether to reformat code in a tidy way when displaying it</td>
+                    </tr>
+                    <tr>
+                        <td>results</td>
+                        <td>"markup"</td>
+                        <td>Output format for code results (e.g., "markup", "asis", "hold", or "hide")</td>
+                    </tr>
+                    <tr>
+                        <td>cache</td>
+                        <td>FALSE</td>
+                        <td>Whether to cache results for future renders</td>
+                    </tr>
+                    <tr>
+                        <td>comment</td>
+                        <td>"##"</td>
+                        <td>Comment character to preface results with</td>
+                    </tr>
+                    <tr>
+                        <td>fig.width</td>
+                        <td>7</td>
+                        <td>Width in inches for plots created in the chunk</td>
+                    </tr>
+                    <tr>
+                        <td>fig.height</td>
+                        <td>7</td>
+                        <td>Height in inches for plots created in the chunk</td>
+                    </tr>
+                </table>
+                
+            </div>
+
+            <div class = "me none">
+                <h2 id = "about">About Me</h2>
+                <p>I am a 2nd year PhD student in the Quanitative Methods Department at York University. Although my research primary revolves around adapting machine learning methodologies to Psychology, I take immense pleasure in improving the statistical literacy for everyone involved. </p>
+                <p>My research interests include = <span style="color: blue;">Machine Learning</span>, <span style="color: green;">Psychometrics</span>, <span style="color: red;">statistical pedagogy</span>, and <span style="color: purple;">Data Science</span>.</p>
+                <p>My hobbies include = <span style="color: orange;">Jiu Jitsu</span>, <span style="color: teal;">Coding</span>, <span style="color: magenta;">Working Out</span>, and <span style="color: brown;">Reading</span>.</p>
+                <p>“Success is not final, failure is not fatal: It is the courage to continue that counts.” - Winston S. Churchill</p>
+                <button class="contact"><a href="mailto:arjun10@yorku.ca">Contact Me</a></button>
+                <div class ="me2"><img src = "me.jpeg"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
